@@ -1,0 +1,103 @@
+{
+	// Place your snippets for python here. Each snippet is defined under a snippet name and has a prefix, body and
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+	// same ids are connected.
+	// Doku: https://code.visualstudio.com/docs/editor/userdefinedsnippets
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"pandas_imports": {
+		"prefix": "jm_imports",
+		"body": [
+			"from pathlib import Path",
+			"import pandas as pd",
+			"import numpy as np",
+			"import matplotlib.pyplot as plt",
+			"import seaborn as sns",
+			"from IPython.display import display",
+			"speicherort = pfad = Path.home() / 'Documents' / 'Scripts' / 'artikelliste'"
+		],
+		"description": "JM Pandas Imports"
+	},
+	"HDF5_laden": {
+		"prefix": "jm_hdf5",
+		"body": [
+			"with pd.HDFStore(speicherort / 'store.h5') as store:",
+			"    uebersicht: pd.DataFrame = store['artikel/uebersicht']"
+		],
+		"description": "HDF5 importieren"
+	},
+	"HDF5_laden_komplett": {
+		"prefix": "jm_hdf5_komplett",
+		"body": [
+			"with pd.HDFStore(speicherort / 'store.h5') as store:",
+			"	# store.put('artikel/uebersicht', artikeldaten, format='table')",
+			"	# store['artikel/uebersicht']",
+			"	# store.remove('artikel/uebersicht')",
+			"	# print(store.keys())",
+			"	uebersicht: pd.DataFrame = store['artikel/uebersicht']",
+			"	stammdaten = store['artikel/stammdaten']",
+			"	rahmen = store['artikel/rahmen']",
+			"	lager = store['artikel/lager']",
+			"	ekv = store['artikel/ekv']",
+			"	verbrauch = store['artikel/verbrauch']",
+			"	warengruppen = store['stammdaten/warengruppen']",
+			"	signalcodes = store['stammdaten/signalcodes']"
+		],
+		"description": "HDF5 importieren"
+	},
+	"csnap": {
+		"prefix": "jm_cnsap",
+		"body": [
+			"def csnap(df, fn=lambda x: x.shape, msg=None):",
+			"    if msg:",
+			"        print(msg)",
+			"    display(fn(df))",
+			"    return df",
+		],
+		"description": "Pandas Pipe Inspection"
+	},
+	"md": {
+		"prefix": "markdown",
+		"body": [
+			"# %% [markdown]",
+			"# $0",
+		],
+		"description": "IPython Markdown"
+	},
+	"datei_zeit": {
+		"prefix": "datei_zeit",
+		"body": [
+			"datei_zeit = datetime.datetime.fromtimestamp(",
+			"datei.stat().st_mtime).strftime('%d.%m.%Y %H:%m')",
+		],
+		"description": "Datum einer Datei"
+	},
+	"suchfunktion": {
+		"prefix": "suchfunktion",
+		"body": [
+			"def generalize(ser, match_name, default=None, regex=False, case=False):"
+    		"	seen = None",
+    		"	for match, name in match_name:",
+    		"	    mask = ser.str.contains(match, case=case, regex=regex)",
+    		"	    if seen is None:",
+    		"	        seen = mask",
+    		"	    else:",
+    		"	        seen |= mask",
+    		"	    ser = ser.where(~mask, name)",
+    		"	if default:",
+    		"	    ser = ser.where(seen, default)",
+    		"	else:",
+    		"	    ser = ser.where(seen, ser.values)",
+    		"	return ser",
+		]
+		"description": "Suchfunktion für Pandas Series"
+	}
+}
